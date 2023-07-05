@@ -21,7 +21,7 @@ export default function SignupPage() {
 	};
 
 	return (
-		<div className='flex items-center justify-center min-h-screen py-2'>
+		<div className='pageWrapper'>
 			<form onSubmit={onSignup} className='formWrapper'>
 				<h1 className='text-center text-3xl tracking-widest font-bold'>Signup</h1>
 				<br />

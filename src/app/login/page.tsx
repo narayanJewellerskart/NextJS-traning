@@ -20,7 +20,7 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className='flex items-center justify-center min-h-screen py-2'>
+		<div className='pageWrapper'>
 			<form onSubmit={handleSubmit} className='formWrapper'>
 				<h1 className='text-center text-3xl tracking-widest font-bold'>Login</h1>
 				<br />
