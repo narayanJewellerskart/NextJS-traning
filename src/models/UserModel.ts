@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Model } from "mongoose";
 import bcrypt from "bcryptjs";
-import { IUser, IUserModel } from "@/type-checking/Interface";
+import { IUser } from "@/type-checking/Interface";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<IUser>(
 	{
 		username: {
 			type: String,
@@ -37,6 +37,6 @@ userSchema.methods.comparePassword = async function (password: string): Promise<
 	return bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.models.users || mongoose.model("users", userSchema);
+const User: Model<IUser> = mongoose.models.users || mongoose.model<IUser>("users", userSchema);
 
 export default User;
