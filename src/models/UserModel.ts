@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { IUser, IUserModel } from "@/type-checking/Interface";
 
-const UserSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
 	{
 		username: {
 			type: String,
@@ -33,10 +33,10 @@ const UserSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-UserSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
+userSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
 	return bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.models.user || mongoose.model("User", UserSchema);
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;

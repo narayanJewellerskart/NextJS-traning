@@ -10,10 +10,10 @@ export async function connectDB() {
 
 		connection.on("error", (err) => {
 			console.log("MongoDB connection error. Please make sure database is running. ", err);
-			process.exit(1);
+			process.exit();
 		});
 	} catch (error) {
 		console.log("Something went wrong!");
-		process.exit(1);
+		process.exit();
 	}
 }
