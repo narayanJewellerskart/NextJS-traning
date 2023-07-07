@@ -1,16 +1,29 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function SignupPage() {
+	const router = useRouter();
+
 	const [userData, setUserData] = useState({
 		email: "",
 		password: "",
 		username: "",
 	});
+
+	const [buttonDisabled, setButtonDisabled] = useState(false);
+
+	useEffect(() => {
+		if (userData.email.length > 0 && userData.username.length > 0 && userData.password.length > 0) {
+			setButtonDisabled(false);
+		} else {
+			setButtonDisabled(true);
+		}
+	}, [userData]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -18,6 +31,16 @@ export default function SignupPage() {
 
 	const onSignup = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		console.log(userData);
+
+		try {
+			await axios.post("/api/users/signup", userData);
+			toast.success("Signup success.Please Login");
+			router.push("/login");
+		} catch (error: any) {
+			console.log("Signup Failed", error.message);
+			toast.error(error.message);
+		}
 	};
 
 	return (
@@ -45,7 +68,7 @@ export default function SignupPage() {
 					<input className='inputType' type='password' name='password' id='password' value={userData.password} onChange={handleChange} />
 				</div>
 				<button type='submit' className='submitBtn'>
-					Submit
+					{buttonDisabled ? "No signup" : "Submit"}
 				</button>
 				<br />
 				<br />
@@ -56,6 +79,7 @@ export default function SignupPage() {
 					</Link>
 				</p>
 			</form>
+			<Toaster position='bottom-center' />
 		</div>
 	);
 }
