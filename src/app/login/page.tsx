@@ -4,8 +4,11 @@ import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
+	const router = useRouter();
+
 	const [userData, setUserData] = useState({
 		email: "",
 		password: "",
@@ -17,6 +20,14 @@ export default function LoginPage() {
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		try {
+			await axios.post("/api/users/login", userData);
+			toast.success("Login success.");
+			// router.push("/login");
+		} catch (error: any) {
+			console.log("Login Failed", error.message);
+			toast.error(error.message);
+		}
 	};
 
 	return (

@@ -31,8 +31,6 @@ export default function SignupPage() {
 
 	const onSignup = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log(userData);
-
 		try {
 			await axios.post("/api/users/signup", userData);
 			toast.success("Signup success.Please Login");
